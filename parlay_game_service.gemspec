@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = ParlayGameService::VERSION
   spec.authors       = ["Dmitry Khromov"]
   spec.email         = ["devandart@ya.ru"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{A simple Parlay Game Services ruby wrapper}
+  spec.summary       = %q{A simple Parlay Game Services ruby wrapper}
   spec.homepage      = ""
   spec.license       = "MIT"
 
