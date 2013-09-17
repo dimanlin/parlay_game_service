@@ -1,13 +1,13 @@
 require "parlay_game_service/version"
 
 module ParlayGameService
-  require 'proxy'
-  require 'api_error'
-  require 'curb'
-  require 'json'
-  require 'hash'
-  require 'array'
-  require 'string'
+  require 'parlay_game_service/proxy'
+  require 'parlay_game_service/api_error'
+#  require 'curb'
+#  require 'json'
+  require 'parlay_game_service/hash'
+  require 'parlay_game_service/array'
+  require 'parlay_game_service/string'
 
 	# Url for request, default for sandbox
 	mattr_accessor :url
