@@ -16,26 +16,19 @@ module ParlayGameService
     end
 
     def invoke(method, args)
-      puts "1777777777777777"
       request_attributes = {'userId' => "OGS12345", 'siteId' => 'OGS', 'sessionId' => '354252352435', 'key' => '62VNKjd29s', 'lang' => 'en'}
-      puts "2222222222222222222222222222222222"
-      puts args['jsessionid'].inspect
-      puts "333333333333333333333333333"
-      puts args['jsessionid'] ? ";#{args['jsessionid']}" : nil
       uri = URI("http://blws1.parlaygames.net/site-api/#{method}#{args['jsessionid'] ? ";jsessionid=#{args['jsessionid']}" : nil}")
-      puts "444444444444444444444"
-      puts uri
+      args.delete('jsessionid')
 			c = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
 		  	req = Net::HTTP::Post.new uri.request_uri
-        req.set_form_data(request_attributes)
+        req.set_form_data(args)
 			  response = http.request(req) # Net::HTTPResponse object
 			end
-      puts "2222222222222222222222"
-      puts c.body.inspect
+       puts c.body.inspect if @debug
       hash = Hash.from_xml(c.body)
 
       puts "parlay_game_services output: #{hash}" if @debug
-      if (hash.include?("error_code"))
+      if (hash['results'].include?("errors"))
         raise ParlayGameService::ApiError, hash
       else
         hash
@@ -44,11 +37,6 @@ module ParlayGameService
 
     def method_missing(name, args = nil, &block)
       invoke(name.to_s.to_s.tableize.gsub("_", ".").singularize, args)
-    end
-
-    def to_hash_params *args
-      return {} if args.empty?
-      return args.first.camelize_keys
     end
   end
 end

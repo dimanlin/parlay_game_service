@@ -1,15 +1,15 @@
 module ParlayGameService
   class ApiError < RuntimeError
-    attr_reader :error_detail, :error_str, :error_code
+    attr_reader :error_message, :error_token
 
     def initialize(hash)
-      @error_detail = hash["error_detail"]
-      @error_str = hash["error_str"]
-      @error_code = hash["error_code"]
+      error = hash['results']['errors']['error']
+      @error_message = error['message']
+      @error_token = error['token']
     end
 
     def to_s
-      "@error_detail=\"#{@error_detail}\", @error_str=\"#{@error_str}\", @error_code=\"#{@error_code}\""
+      "message: #{@error_message}; token: #{@error_token}"
     end
 
   end
