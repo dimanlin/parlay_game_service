@@ -6,7 +6,6 @@ module ParlayGameService
 #  require 'curb'
 #  require 'json'
   require 'parlay_game_service/hash'
-  require 'parlay_game_service/array'
   require 'parlay_game_service/string'
 
 	mattr_accessor :url

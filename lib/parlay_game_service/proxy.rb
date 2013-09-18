@@ -16,12 +16,11 @@ module ParlayGameService
     end
 
     def invoke(method, args)
-      request_attributes = {'userId' => "OGS12345", 'siteId' => 'OGS', 'sessionId' => '354252352435', 'key' => '62VNKjd29s', 'lang' => 'en'}
       uri = URI("http://blws1.parlaygames.net/site-api/#{method}#{args['jsessionid'] ? ";jsessionid=#{args['jsessionid']}" : nil}")
       args.delete('jsessionid')
 			c = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
 		  	req = Net::HTTP::Post.new uri.request_uri
-        req.set_form_data(args)
+        req.set_form_data(args.camelize_keys_lower)
 			  response = http.request(req) # Net::HTTPResponse object
 			end
        puts c.body.inspect if @debug
