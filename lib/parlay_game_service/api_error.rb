@@ -1,4 +1,4 @@
-module ParlayGameServices
+module ParlayGameService
   class ApiError < RuntimeError
     attr_reader :error_detail, :error_str, :error_code
 
